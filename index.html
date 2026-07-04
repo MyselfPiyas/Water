@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeakWatch &mdash; Infrared &amp; Acoustic Leak Detection</title>
+<meta name="description" content="LeakWatch fuses infrared thermography and acoustic emission sensing to find pipe leaks before they become floods.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28">
+          <path d="M16 3 C16 3 6 14 6 20.5 C6 26.3 10.5 30 16 30 C21.5 30 26 26.3 26 20.5 C26 14 16 3 16 3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M16 10 C14 14 11 18 11 21 C11 24 13.2 26 16 26" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.6"/>
+        </svg>
+      </span>
+      LeakWatch
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#how">How it works</a>
+      <a href="#dashboard">Live signal</a>
+      <a href="#deploy">Deployment</a>
+      <a href="#specs">Specs</a>
+      <a href="#contact" class="nav-cta">Request a survey</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+ 
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Dual-sensor leak detection</p>
+        <h1>Hear the leak.<br>See the heat.<br><span class="accent-cyan">Stop it early.</span></h1>
+        <p class="hero-lede">Water escaping a pressurised pipe does two things it can't hide: it hisses at frequencies the ear can't catch, and it cools the surface around it. LeakWatch listens for one and looks for the other, then cross-checks both before it ever wakes you up.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Request a site survey</a>
+          <a href="#dashboard" class="btn btn-ghost">Watch the signal &darr;</a>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>92%</dt><dd>leaks caught before surface damage</dd></div>
+          <div><dt>&lt;15 min</dt><dd>median time-to-alert</dd></div>
+          <div><dt>2 senses</dt><dd>acoustic + thermal, cross-validated</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="pipe-card">
+          <svg id="pipe-svg" viewBox="0 0 420 320" width="100%" height="100%">
+            <defs>
+              <linearGradient id="thermalGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#1c2a3a"/>
+                <stop offset="45%" stop-color="#2c5f6e"/>
+                <stop offset="62%" stop-color="#4fd9d0"/>
+                <stop offset="78%" stop-color="#e8a33d"/>
+                <stop offset="100%" stop-color="#ff5d5d"/>
+              </linearGradient>
+              <clipPath id="pipeClip">
+                <rect x="40" y="120" width="340" height="80" rx="40"/>
+              </clipPath>
+            </defs>
+
+            <rect x="40" y="120" width="340" height="80" rx="40" fill="#101b29" stroke="#26374a" stroke-width="2"/>
+            <g clip-path="url(#pipeClip)">
+              <rect id="thermal-band" x="220" y="120" width="90" height="80" fill="url(#thermalGrad)" opacity="0.9"/>
+            </g>
+            <rect x="40" y="120" width="340" height="80" rx="40" fill="none" stroke="#26374a" stroke-width="2"/>
+
+            <circle id="leak-point" cx="262" cy="160" r="4" fill="#ff5d5d"/>
+            <g id="leak-rings" opacity="0">
+              <circle cx="262" cy="160" r="10" fill="none" stroke="#ff5d5d" stroke-width="1.5"/>
+              <circle cx="262" cy="160" r="20" fill="none" stroke="#ff5d5d" stroke-width="1"/>
+            </g>
+
+            <polyline id="waveform" fill="none" stroke="#4fd9d0" stroke-width="2" points=""/>
+
+            <text x="60" y="250" class="svg-label">INFRARED PASS</text>
+            <text x="60" y="270" class="svg-label dim">surface &Delta;T across pipe run</text>
+            <text x="60" y="298" class="svg-label">ACOUSTIC PASS</text>
+            <text x="220" y="298" class="svg-label dim" id="acoustic-reading">amplitude 0.12</text>
+          </svg>
+        </div>
+        <p class="visual-caption">Live simulated readout &mdash; a real unit streams this from the pipe wall.</p>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section class="section" id="how">
+    <div class="wrap">
+      <p class="eyebrow">The two senses</p>
+      <h2>One sensor can be fooled. Two, rarely.</h2>
+      <p class="section-lede">Infrared alone flags every warm radiator and sunbeam. Acoustic alone flags every footstep and passing truck. LeakWatch only raises an alert when both signatures agree, in the same place, at the same time.</p>
+
+      <div class="sense-grid">
+        <article class="sense-card">
+          <div class="sense-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="40" height="40">
+              <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.6"/>
+              <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Infrared thermography</h3>
+          <p>A microbolometer array scans the pipe jacket for the faint cold (or hot, on heating loops) plume that escaping water leaves behind, down to a 0.05&deg;C difference invisible to the hand.</p>
+          <ul class="sense-list">
+            <li>Reads surface temperature, not just air temperature</li>
+            <li>Works through insulation cladding and behind drywall</li>
+            <li>Maps the plume's shape to estimate flow direction</li>
+          </ul>
+        </article>
+
+        <article class="sense-card">
+          <div class="sense-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="40" height="40">
+              <path d="M6 24 Q12 10 18 24 T30 24 T42 24" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Acoustic emission sensing</h3>
+          <p>Piezoelectric transducers clamp to the pipe and listen in the 20&ndash;80kHz band, where pressurised water forced through a crack produces a persistent hiss that normal plumbing noise doesn't.</p>
+          <ul class="sense-list">
+            <li>Detects leaks as small as 0.1 litres per minute</li>
+            <li>Locates the leak along the pipe run by triangulating arrival time</li>
+            <li>Filters out flow noise from valves, pumps and taps in use</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section section-alt" id="dashboard">
+    <div class="wrap">
+      <p class="eyebrow">Live signal</p>
+      <h2>What the monitoring feed looks like</h2>
+      <p class="section-lede">This is a simulation of the same dashboard a facilities team watches. Trigger a synthetic leak event to see how the two readings converge before an alert fires.</p>
+
+      <div class="dashboard-card">
+        <div class="dashboard-top">
+          <div class="reading-block">
+            <span class="reading-label">Acoustic amplitude</span>
+            <span class="reading-value mono" id="acoustic-value">0.12</span>
+            <div class="reading-bar"><div class="reading-bar-fill" id="acoustic-bar"></div></div>
+          </div>
+          <div class="reading-block">
+            <span class="reading-label">Thermal &Delta;T (&deg;C)</span>
+            <span class="reading-value mono" id="thermal-value">0.03</span>
+            <div class="reading-bar"><div class="reading-bar-fill" id="thermal-bar"></div></div>
+          </div>
+          <div class="reading-block status-block">
+            <span class="reading-label">Status</span>
+            <span class="status-pill" id="status-pill">Nominal</span>
+          </div>
+        </div>
+
+        <canvas id="wave-canvas" width="900" height="140" aria-label="Acoustic waveform visualisation"></canvas>
+
+        <div class="dashboard-actions">
+          <button class="btn btn-primary" id="trigger-leak">Simulate a leak event</button>
+          <button class="btn btn-ghost" id="reset-leak">Reset to nominal</button>
+        </div>
+        <p id="log-line" class="log-line mono">&gt; system idle, both channels nominal</p>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section" id="deploy">
+    <div class="wrap">
+      <p class="eyebrow">Deployment sequence</p>
+      <h2>From site visit to standing alert, in four passes</h2>
+
+      <ol class="process-list">
+        <li>
+          <span class="process-index">01</span>
+          <div>
+            <h3>Pipe run survey</h3>
+            <p>We walk the accessible pipe runs with a handheld thermal camera to flag insulation gaps, prior repairs and likely failure points before any sensor is fixed in place.</p>
+          </div>
+        </li>
+        <li>
+          <span class="process-index">02</span>
+          <div>
+            <h3>Sensor placement</h3>
+            <p>Acoustic transducers are clamped at intervals set by pipe material and diameter; infrared units are mounted with a clear sightline to the longest exposed runs and known joints.</p>
+          </div>
+        </li>
+        <li>
+          <span class="process-index">03</span>
+          <div>
+            <h3>Baseline calibration</h3>
+            <p>The system records seven days of normal acoustic and thermal activity, so it learns what your building's pumps, traffic and sun exposure look like before flagging anything as unusual.</p>
+          </div>
+        </li>
+        <li>
+          <span class="process-index">04</span>
+          <div>
+            <h3>Live monitoring</h3>
+            <p>Once both channels agree on a deviation, the system locates it along the run and sends a location, a confidence score and a snapshot of both readings to your maintenance queue.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  
+  <section class="section section-alt" id="specs">
+    <div class="wrap">
+      <p class="eyebrow">Hardware</p>
+      <h2>Specifications</h2>
+
+      <div class="specs-grid">
+        <div class="specs-card">
+          <h3>Infrared unit</h3>
+          <table class="specs-table">
+            <tbody>
+              <tr><th>Sensor</th><td>Uncooled microbolometer, 384&times;288</td></tr>
+              <tr><th>Thermal sensitivity</th><td>&le;0.05&deg;C (NETD)</td></tr>
+              <tr><th>Range per unit</th><td>Up to 8m sightline</td></tr>
+              <tr><th>Scan interval</th><td>Every 90 seconds</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="specs-card">
+          <h3>Acoustic unit</h3>
+          <table class="specs-table">
+            <tbody>
+              <tr><th>Sensor</th><td>Piezoelectric transducer, clamp-mount</td></tr>
+              <tr><th>Frequency band</th><td>20&ndash;80kHz</td></tr>
+              <tr><th>Spacing</th><td>Every 25&ndash;40m of pipe run</td></tr>
+              <tr><th>Sample rate</th><td>Continuous, 250kSa/s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="specs-card">
+          <h3>System</h3>
+          <table class="specs-table">
+            <tbody>
+              <tr><th>Connectivity</th><td>LoRaWAN mesh, Ethernet gateway</td></tr>
+              <tr><th>Power</th><td>PoE or 3-year lithium pack</td></tr>
+              <tr><th>Alerting</th><td>SMS, email, webhook</td></tr>
+              <tr><th>Data retention</th><td>18 months on-device, unlimited in cloud</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">Get started</p>
+        <h2>Request a site survey</h2>
+        <p class="section-lede">Tell us about the building and the pipe runs you're worried about. A surveyor will follow up to scope sensor placement, usually within two working days.</p>
+      </div>
+
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="form-row">
+          <label for="building-type">Site type</label>
+          <select id="building-type" name="building-type">
+            <option value="residential">Residential building</option>
+            <option value="commercial">Commercial / office</option>
+            <option value="industrial">Industrial plant</option>
+            <option value="municipal">Municipal water network</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">What are you trying to protect?</label>
+          <textarea id="message" name="message" rows="4" placeholder="e.g. a 40-year-old riser system with two prior slab leaks"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send request</button>
+        <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>&copy; <span id="year"></span> LeakWatch. Dual-sensor leak detection.</span>
+    <span class="footer-links">
+      <a href="#top">Back to top</a>
+    </span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
